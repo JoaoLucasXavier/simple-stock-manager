@@ -20,7 +20,7 @@ namespace simple_stock_manager.Models
         [DisplayName("Data compra")]
         public DateTime PurchaseDate { get; set; }
 
-        public Product Customer { get; set; }
+        public Customer Customer { get; set; }
         public Product Product { get; set; }
     }
 }
