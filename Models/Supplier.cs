@@ -16,6 +16,7 @@ namespace simple_stock_manager.Models
         [StringLength(14, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 11)]
         public string Document { get; set; }
 
+        [DisplayName("Tipo")]
         public TypeOfPerson SupplierType { get; set; }
 
         public SupplierAddress Address { get; set; }
