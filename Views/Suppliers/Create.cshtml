@@ -1,12 +1,11 @@
 @model simple_stock_manager.Models.Supplier
 
 @{
-    ViewData["Title"] = "Criar";
+    ViewData["Title"] = "Adicionar";
 }
 
-<h2>Criar</h2>
+<h3>Adicionar fornecedor</h3>
 
-<h4>Fornecedor</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -39,10 +38,14 @@
             <hr />
             <div class="form-group">
                 <div class="d-inline p-2">
-                    <input type="submit" value="Create" class="btn btn-success" />
+                    <button type="" value="Salvar" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Salvar
+                    </button>
                 </div>
                 <div class="d-inline p-2">
-                    <a asp-action="Index" class="btn btn-secondary float-right">Voltar</a>
+                    <a asp-action="Index" class="btn btn-secondary float-right">
+                        <i class="fas fa-arrow-circle-left"></i> Voltar
+                    </a>
                 </div>
             </div>
         </form>

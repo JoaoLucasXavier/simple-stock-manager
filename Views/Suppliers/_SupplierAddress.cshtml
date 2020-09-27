@@ -1,0 +1,59 @@
+@page
+@model simple_stock_manager.Views_Suppliers._SupplierAddressModel
+
+<h4>SupplierAddress</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SupplierAddress.SupplierId" class="control-label"></label>
+                <select asp-for="SupplierAddress.SupplierId" class ="form-control" asp-items="ViewBag.SupplierId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupplierAddress.PublicPlace" class="control-label"></label>
+                <input asp-for="SupplierAddress.PublicPlace" class="form-control" />
+                <span asp-validation-for="SupplierAddress.PublicPlace" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupplierAddress.Number" class="control-label"></label>
+                <input asp-for="SupplierAddress.Number" class="form-control" />
+                <span asp-validation-for="SupplierAddress.Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupplierAddress.Complement" class="control-label"></label>
+                <input asp-for="SupplierAddress.Complement" class="form-control" />
+                <span asp-validation-for="SupplierAddress.Complement" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupplierAddress.PostalCode" class="control-label"></label>
+                <input asp-for="SupplierAddress.PostalCode" class="form-control" />
+                <span asp-validation-for="SupplierAddress.PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupplierAddress.Neighborhood" class="control-label"></label>
+                <input asp-for="SupplierAddress.Neighborhood" class="form-control" />
+                <span asp-validation-for="SupplierAddress.Neighborhood" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupplierAddress.City" class="control-label"></label>
+                <input asp-for="SupplierAddress.City" class="form-control" />
+                <span asp-validation-for="SupplierAddress.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupplierAddress.State" class="control-label"></label>
+                <input asp-for="SupplierAddress.State" class="form-control" />
+                <span asp-validation-for="SupplierAddress.State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
