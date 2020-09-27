@@ -37,7 +37,7 @@
                 @Html.DisplayFor(modelItem => item.Document)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SupplierType)
+                @(item.SupplierType.ToString() == "NaturalPerson" ? "PF" : "PJ")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Active)
