@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using simple_stock_manager.Data;
 using simple_stock_manager.Models;
@@ -19,13 +17,11 @@ namespace simple_stock_manager.Controllers
             _context = context;
         }
 
-        // GET: Suppliers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Suppliers.ToListAsync());
         }
 
-        // GET: Suppliers/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -43,22 +39,17 @@ namespace simple_stock_manager.Controllers
             return View(supplier);
         }
 
-        // GET: Suppliers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Suppliers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Document,SupplierType,Active,Id")] Supplier supplier)
+        public async Task<IActionResult> Create(Supplier supplier)
         {
             if (ModelState.IsValid)
             {
-                supplier.Id = Guid.NewGuid();
                 _context.Add(supplier);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,7 +57,6 @@ namespace simple_stock_manager.Controllers
             return View(supplier);
         }
 
-        // GET: Suppliers/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -82,12 +72,9 @@ namespace simple_stock_manager.Controllers
             return View(supplier);
         }
 
-        // POST: Suppliers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Name,Document,SupplierType,Active,Id")] Supplier supplier)
+        public async Task<IActionResult> Edit(Guid id, Supplier supplier)
         {
             if (id != supplier.Id)
             {
@@ -117,7 +104,6 @@ namespace simple_stock_manager.Controllers
             return View(supplier);
         }
 
-        // GET: Suppliers/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -135,7 +121,6 @@ namespace simple_stock_manager.Controllers
             return View(supplier);
         }
 
-        // POST: Suppliers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
