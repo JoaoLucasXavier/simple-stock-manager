@@ -65,6 +65,8 @@ namespace simple_stock_manager.Controllers
             }
 
             var supplier = await _context.Suppliers.FindAsync(id);
+            supplier.Address = await _context.SuppliersAddress.FindAsync(id);
+
             if (supplier == null)
             {
                 return NotFound();
