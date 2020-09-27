@@ -24,18 +24,10 @@ namespace simple_stock_manager.Controllers
 
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var supplier = await _context.Suppliers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (supplier == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
+            var supplier = await _context.Suppliers.FirstOrDefaultAsync(m => m.Id == id);
+            supplier.Address = await _context.SuppliersAddress.FirstOrDefaultAsync(m => m.SupplierId == id);
+            if (supplier == null) return NotFound();
             return View(supplier);
         }
 
@@ -48,29 +40,18 @@ namespace simple_stock_manager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Supplier supplier)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(supplier);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(supplier);
+            if (!ModelState.IsValid) View(supplier);
+            _context.Add(supplier);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var supplier = await _context.Suppliers.FindAsync(id);
-            supplier.Address = await _context.SuppliersAddress.FindAsync(id);
-
-            if (supplier == null)
-            {
-                return NotFound();
-            }
+            supplier.Address = await _context.SuppliersAddress.FirstOrDefaultAsync(m => m.SupplierId == id);
+            if (supplier == null) return NotFound();
             return View(supplier);
         }
 
@@ -78,48 +59,26 @@ namespace simple_stock_manager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Supplier supplier)
         {
-            if (id != supplier.Id)
+            if (id != supplier.Id) return NotFound();
+            if (!ModelState.IsValid) View(supplier);
+            try
             {
-                return NotFound();
+                _context.Update(supplier);
+                await _context.SaveChangesAsync();
             }
-
-            if (ModelState.IsValid)
+            catch (DbUpdateConcurrencyException)
             {
-                try
-                {
-                    _context.Update(supplier);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SupplierExists(supplier.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                if (!SupplierExists(supplier.Id)) return NotFound();
+                else throw;
             }
-            return View(supplier);
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var supplier = await _context.Suppliers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (supplier == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
+            var supplier = await _context.Suppliers.FirstOrDefaultAsync(m => m.Id == id);
+            if (supplier == null) return NotFound();
             return View(supplier);
         }
 
