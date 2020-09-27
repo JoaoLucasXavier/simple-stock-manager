@@ -187,7 +187,14 @@ namespace simple_stock_manager.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    CustomerId = table.Column<Guid>(nullable: false)
+                    CustomerId = table.Column<Guid>(nullable: false),
+                    PublicPlace = table.Column<string>(maxLength: 100, nullable: false),
+                    Number = table.Column<string>(maxLength: 25, nullable: false),
+                    Complement = table.Column<string>(nullable: true),
+                    PostalCode = table.Column<string>(maxLength: 8, nullable: false),
+                    Neighborhood = table.Column<string>(maxLength: 50, nullable: false),
+                    City = table.Column<string>(maxLength: 25, nullable: false),
+                    State = table.Column<string>(maxLength: 25, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -229,7 +236,14 @@ namespace simple_stock_manager.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    SupplierId = table.Column<Guid>(nullable: false)
+                    SupplierId = table.Column<Guid>(nullable: false),
+                    PublicPlace = table.Column<string>(maxLength: 100, nullable: false),
+                    Number = table.Column<string>(maxLength: 25, nullable: false),
+                    Complement = table.Column<string>(nullable: true),
+                    PostalCode = table.Column<string>(maxLength: 8, nullable: false),
+                    Neighborhood = table.Column<string>(maxLength: 50, nullable: false),
+                    City = table.Column<string>(maxLength: 25, nullable: false),
+                    State = table.Column<string>(maxLength: 25, nullable: false)
                 },
                 constraints: table =>
                 {
