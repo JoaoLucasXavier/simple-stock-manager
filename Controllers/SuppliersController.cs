@@ -28,7 +28,8 @@ namespace simple_stock_manager.Controllers
             var supplier = await _context.Suppliers.FirstOrDefaultAsync(m => m.Id == id);
             supplier.Address = await _context.SuppliersAddress.FirstOrDefaultAsync(m => m.SupplierId == id);
             if (supplier == null) return NotFound();
-            return View(supplier);
+            var tuple = new Tuple<Supplier, SupplierAddress>(supplier, supplier.Address);
+            return View(tuple);
         }
 
         public IActionResult Create()
