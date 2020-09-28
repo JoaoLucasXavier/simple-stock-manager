@@ -1,44 +1,98 @@
-@model simple_stock_manager.Models.Supplier
+@using simple_stock_manager.Models;
+@model Tuple<Supplier, SupplierAddress>
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h3>Detalhes fornecedor</h3>
+<h1>Detalhes</h1>
+<h4>Fornecedor</h4>
+<hr />
 
-<div>
-    <hr />
+<div class="container">
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(tuple => tuple.Item1.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(tuple => tuple.Item1.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Document)
+            @Html.DisplayNameFor(tuple => tuple.Item1.Document)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Document)
+            @Html.DisplayFor(tuple => tuple.Item1.Document)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SupplierType)
+            @Html.DisplayNameFor(tuple => tuple.Item1.SupplierType)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SupplierType)
+            @(@Model.Item1.SupplierType.ToString() == "NaturalPerson" ? "PF" : "PJ")
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Active)
+            @Html.DisplayNameFor(tuple => tuple.Item1.Active)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Active)
+            @Html.DisplayFor(tuple => tuple.Item1.Active)
         </dd>
     </dl>
 </div>
+
+<h4>Endereço</h4>
+<hr />
+
+<div class="container">
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(tuple => tuple.Item2.PublicPlace)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(tuple => tuple.Item2.PublicPlace)
+        </dd>
+
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(tuple => tuple.Item2.Number)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(tuple => tuple.Item2.Number)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(tuple => tuple.Item2.Complement)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(tuple => tuple.Item2.Complement)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(tuple => tuple.Item2.PostalCode)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(tuple => tuple.Item2.PostalCode)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(tuple => tuple.Item2.Neighborhood)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(tuple => tuple.Item2.Neighborhood)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(tuple => tuple.Item2.City)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(tuple => tuple.Item2.City)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(tuple => tuple.Item2.State)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(tuple => tuple.Item2.State)
+        </dd>
+    </dl>
+</div>
+
 <hr>
 <div>
     <div class="d-inline p-2">
-        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success">
+        <a asp-action="Edit" asp-route-id="@Model.Item1.Id" class="btn btn-success">
             <i class="fas fa-edit"></i> Editar
         </a>
     </div>
