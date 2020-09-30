@@ -49,13 +49,13 @@ namespace simple_stock_manager.Controllers
         // GET: Shopping/Create
         public IActionResult Create()
         {
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Document");
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Description");
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name");
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name");
             return View();
         }
 
         // POST: Shopping/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -92,7 +92,7 @@ namespace simple_stock_manager.Controllers
         }
 
         // POST: Shopping/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
