@@ -1,59 +1,55 @@
 @model IEnumerable<simple_stock_manager.Models.Shopping>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Compras";
 }
 
-<h1>Index</h1>
+<h1>Compras</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i> Comprar</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table table-dark table-striped table-hover border border-primary">
+    <thead class="bg-primary">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
+            <th>Cliente</th>
+            <th>Produto</th>
             <th>
                 @Html.DisplayNameFor(model => model.PurchasePrice)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PurchaseDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product)
+                @Html.DisplayNameFor(model => model.Amount)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Amount)
+                @Html.DisplayFor(modelItem => item.Customer.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PurchasePrice)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PurchaseDate)
+                @Html.DisplayFor(modelItem => item.Amount)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.Document)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.Description)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            <td class="float-right">
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">
+                    <i class="fas fa-receipt"></i> Detalhar
+                </a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-success">
+                    <i class="fas fa-edit"></i> Editar
+                </a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">
+                    <i class="fas fa-trash-alt"></i> Deletar
+                </a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

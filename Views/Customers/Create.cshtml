@@ -1,47 +1,88 @@
 @model simple_stock_manager.Models.Customer
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Adicionar Cliente";
 }
 
-<h1>Create</h1>
-
-<h4>Customer</h4>
+<h1>Adicionar</h1>
+<h4>Cliente</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Document" class="control-label"></label>
-                <input asp-for="Document" class="form-control" />
-                <span asp-validation-for="Document" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CustomerType" class="control-label"></label>
-                <select asp-for="CustomerType" class="form-control"></select>
-                <span asp-validation-for="CustomerType" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="Document" class="control-label"></label>
+                    <input asp-for="Document" class="form-control" />
+                    <span asp-validation-for="Document" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="CustomerType" class="control-label"></label>
+                    <select asp-for="CustomerType" class="form-control">
+                        <option value="">Selecione</option>
+                        <option asp-for="CustomerType" value="1">Pessoa física</option>
+                        <option asp-for="CustomerType" value="2">Pessoa Jurídica</option>
+                    </select>
+                    <span asp-validation-for="CustomerType" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="Active" class="control-label"></label>
+                    <div class="border rounded">
+                        <input asp-for="Active" class="form-control" checked/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4>Endereço</h4>
+    <hr />
+    <partial name="_CustomerAddress"/>
+
+    <hr />
+    <div class="form-group">
+        <div class="d-inline p-2">
+            <button type="submit" value="Salvar" class="btn btn-primary">
+                <i class="fas fa-save"></i> Salvar
+            </button>
+        </div>
+        <div class="d-inline p-2">
+            <a asp-action="Index" class="btn btn-secondary float-right">
+                <i class="fas fa-arrow-circle-left"></i> Voltar
+            </a>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
