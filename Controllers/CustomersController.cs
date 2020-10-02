@@ -28,19 +28,13 @@ namespace simple_stock_manager.Controllers
         // GET: Customers/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
-            return View(customer);
+            var customer = await _context.Customers.FirstOrDefaultAsync(m => m.Id == id);
+            customer.Address = await _context.CustomersAddress.FirstOrDefaultAsync(m => m.CustomerId == id);
+            if (customer == null) return NotFound();
+            var tuple = new Tuple<Customer, CustomerAddress>(customer, customer.Address);
+            return View(tuple);
         }
 
         // GET: Customers/Create
@@ -50,11 +44,11 @@ namespace simple_stock_manager.Controllers
         }
 
         // POST: Customers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Document,CustomerType,Active,Id")] Customer customer)
+        public async Task<IActionResult> Create(Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -69,31 +63,21 @@ namespace simple_stock_manager.Controllers
         // GET: Customers/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
+            customer.Address = await _context.CustomersAddress.FirstOrDefaultAsync(m => m.CustomerId == id);
+            if (customer == null) return NotFound();
             return View(customer);
         }
 
         // POST: Customers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Name,Document,CustomerType,Active,Id")] Customer customer)
+        public async Task<IActionResult> Edit(Guid id, Customer customer)
         {
-            if (id != customer.Id)
-            {
-                return NotFound();
-            }
-
+            if (id != customer.Id) return NotFound();
             if (ModelState.IsValid)
             {
                 try
@@ -104,13 +88,9 @@ namespace simple_stock_manager.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!CustomerExists(customer.Id))
-                    {
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }

@@ -86,8 +86,8 @@ namespace simple_stock_manager.Controllers
             {
                 return NotFound();
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Document", shopping.CustomerId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Description", shopping.ProductId);
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", shopping.CustomerId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name", shopping.ProductId);
             return View(shopping);
         }
 
@@ -123,8 +123,8 @@ namespace simple_stock_manager.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Document", shopping.CustomerId);
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Description", shopping.ProductId);
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", shopping.CustomerId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name", shopping.ProductId);
             return View(shopping);
         }
 

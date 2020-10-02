@@ -83,7 +83,7 @@ namespace simple_stock_manager.Controllers
             {
                 return NotFound();
             }
-            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Document", product.SupplierId);
+            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Name", product.Name);
             return View(product);
         }
 
