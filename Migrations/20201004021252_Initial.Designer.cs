@@ -10,7 +10,7 @@ using simple_stock_manager.Data;
 namespace simple_stock_manager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200927043651_Initial")]
+    [Migration("20201004021252_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -315,10 +315,8 @@ namespace simple_stock_manager.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
-                    b.Property<string>("Imagem")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()

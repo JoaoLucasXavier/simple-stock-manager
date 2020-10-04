@@ -8,9 +8,14 @@
 <h4>Produto</h4>
 <hr />
 
-<form asp-action="Edit">
+<form asp-action="Edit" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="container">
+        <div class="row" style="margin: 0 0 0 2px;">
+            <div class="form-group">
+                <img src="~/upload/@Model.Image" alt="@Model.Image" style="width: 120px; height: 140px"/>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
@@ -37,9 +42,13 @@
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label asp-for="Imagem" class="control-label"></label>
-                    <input asp-for="Imagem" class="form-control" />
-                    <span asp-validation-for="Imagem" class="text-danger"></span>
+                    <label asp-for="ImageUpload" class="control-label"></label>
+                    <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="ImageUpload" asp-for="ImageUpload">
+                    <label data-browse="Procurar" class="custom-file-label" for="ImageUpload"></label>
+                    <label style="display: none" id="img_nome"></label>
+                    </div>
+                    <span asp-validation-for="ImageUpload" class="text-danger"></span>
                 </div>
             </div>
         </div>
@@ -61,10 +70,11 @@
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
-                    </label>
+                <div class="form-group">
+                    <label asp-for="Active" class="control-label"></label>
+                    <div class="border rounded">
+                        <input asp-for="Active" class="form-control" checked/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,4 +97,11 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $("#ImageUpload").change(function () {
+            $("#img_nome").text(this.files[0].name);
+            $("#img_nome")[0].style.display = 'block';
+        });
+    </script>
 }

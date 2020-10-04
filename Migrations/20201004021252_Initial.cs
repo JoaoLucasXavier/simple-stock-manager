@@ -215,7 +215,7 @@ namespace simple_stock_manager.Migrations
                     SupplierId = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     Description = table.Column<string>(maxLength: 200, nullable: false),
-                    Imagem = table.Column<string>(maxLength: 200, nullable: false),
+                    Image = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
                     DateRegister = table.Column<DateTime>(nullable: false),
                     Active = table.Column<bool>(nullable: false)

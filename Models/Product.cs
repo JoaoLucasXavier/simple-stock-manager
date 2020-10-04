@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
 
 namespace simple_stock_manager.Models
 {
@@ -8,7 +10,7 @@ namespace simple_stock_manager.Models
     {
         public Guid SupplierId { get; set; }
 
-        [DisplayName("Nome")]
+        [DisplayName("Produto")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [StringLength(50, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string Name { get; set; }
@@ -19,9 +21,10 @@ namespace simple_stock_manager.Models
         public string Description { get; set; }
 
         [DisplayName("Imagem")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        [StringLength(200, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
-        public string Imagem { get; set; }
+        [NotMapped]
+        public IFormFile ImageUpload { get; set; }
+
+        public string Image { get; set; }
 
         [DisplayName("Valor")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]

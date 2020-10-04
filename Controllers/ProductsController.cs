@@ -1,6 +1,8 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +46,11 @@ namespace simple_stock_manager.Controllers
         {
             if (ModelState.IsValid)
             {
+                /* Upload */
+                var imgPrefixo = Guid.NewGuid() + "_";
+                if (!await UploadArquivo(product.ImageUpload, imgPrefixo)) return View(product);
+                product.Image = imgPrefixo + product.ImageUpload.FileName;
+                /* FIM Upload */
                 product.Id = Guid.NewGuid();
                 _context.Add(product);
                 await _context.SaveChangesAsync();
@@ -71,6 +78,14 @@ namespace simple_stock_manager.Controllers
             {
                 try
                 {
+                    /* Upload */
+                    if (product.ImageUpload != null)
+                    {
+                        var imgPrefixo = Guid.NewGuid() + "_";
+                        if (!await UploadArquivo(product.ImageUpload, imgPrefixo)) return View(product);
+                        product.Image = imgPrefixo + product.ImageUpload.FileName;
+                    }
+                    /* FIM upload */
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
@@ -106,6 +121,22 @@ namespace simple_stock_manager.Controllers
         private bool ProductExists(Guid id)
         {
             return _context.Products.Any(e => e.Id == id);
+        }
+
+        private async Task<bool> UploadArquivo(IFormFile arquivo, string imgPrefixo)
+        {
+            if (arquivo.Length <= 0) return false;
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", imgPrefixo + arquivo.FileName);
+            if (System.IO.File.Exists(path))
+            {
+                ModelState.AddModelError(string.Empty, "Já existe um arquivo com este nome!");
+                return false;
+            }
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await arquivo.CopyToAsync(stream);
+            }
+            return true;
         }
     }
 }
