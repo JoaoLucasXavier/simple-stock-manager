@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -19,34 +18,20 @@ namespace simple_stock_manager.Controllers
             _context = context;
         }
 
-        // GET: Shopping
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Shopping.Include(s => s.Customer).Include(s => s.Product);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Shopping/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var shopping = await _context.Shopping
-                .Include(s => s.Customer)
-                .Include(s => s.Product)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (shopping == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
+            var shopping = await _context.Shopping.Include(s => s.Customer).Include(s => s.Product).FirstOrDefaultAsync(m => m.Id == id);
+            if (shopping == null) return NotFound();
             return View(shopping);
         }
 
-        // GET: Shopping/Create
         public IActionResult Create()
         {
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name");
@@ -54,12 +39,9 @@ namespace simple_stock_manager.Controllers
             return View();
         }
 
-        // POST: Shopping/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerId,ProductId,Amount,PurchasePrice,PurchaseDate,Id")] Shopping shopping)
+        public async Task<IActionResult> Create(Shopping shopping)
         {
             if (ModelState.IsValid)
             {
@@ -73,36 +55,21 @@ namespace simple_stock_manager.Controllers
             return View(shopping);
         }
 
-        // GET: Shopping/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var shopping = await _context.Shopping.FindAsync(id);
-            if (shopping == null)
-            {
-                return NotFound();
-            }
+            if (shopping == null) return NotFound();
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", shopping.CustomerId);
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name", shopping.ProductId);
             return View(shopping);
         }
 
-        // POST: Shopping/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("CustomerId,ProductId,Amount,PurchasePrice,PurchaseDate,Id")] Shopping shopping)
+        public async Task<IActionResult> Edit(Guid id, Shopping shopping)
         {
-            if (id != shopping.Id)
-            {
-                return NotFound();
-            }
-
+            if (id != shopping.Id) return NotFound();
             if (ModelState.IsValid)
             {
                 try
@@ -112,14 +79,8 @@ namespace simple_stock_manager.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ShoppingExists(shopping.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!ShoppingExists(shopping.Id)) return NotFound();
+                    else throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -128,27 +89,14 @@ namespace simple_stock_manager.Controllers
             return View(shopping);
         }
 
-        // GET: Shopping/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var shopping = await _context.Shopping
-                .Include(s => s.Customer)
-                .Include(s => s.Product)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (shopping == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
+            var shopping = await _context.Shopping.Include(s => s.Customer).Include(s => s.Product).FirstOrDefaultAsync(m => m.Id == id);
+            if (shopping == null) return NotFound();
             return View(shopping);
         }
 
-        // POST: Shopping/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

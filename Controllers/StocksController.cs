@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -19,42 +18,26 @@ namespace simple_stock_manager.Controllers
             _context = context;
         }
 
-        // GET: Stocks
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Stock.Include(s => s.Product);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Stocks/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var stock = await _context.Stock
-                .Include(s => s.Product)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (stock == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
+            var stock = await _context.Stock.Include(s => s.Product).FirstOrDefaultAsync(m => m.Id == id);
+            if (stock == null) return NotFound();
             return View(stock);
         }
 
-        // GET: Stocks/Create
         public IActionResult Create()
         {
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name");
             return View();
         }
 
-        // POST: Stocks/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProductId,Amount,Id")] Stock stock)
@@ -70,35 +53,20 @@ namespace simple_stock_manager.Controllers
             return View(stock);
         }
 
-        // GET: Stocks/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var stock = await _context.Stock.FindAsync(id);
-            if (stock == null)
-            {
-                return NotFound();
-            }
+            if (stock == null) return NotFound();
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name", stock.ProductId);
             return View(stock);
         }
 
-        // POST: Stocks/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("ProductId,Amount,Id")] Stock stock)
         {
-            if (id != stock.Id)
-            {
-                return NotFound();
-            }
-
+            if (id != stock.Id) return NotFound();
             if (ModelState.IsValid)
             {
                 try
@@ -108,14 +76,8 @@ namespace simple_stock_manager.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StockExists(stock.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!StockExists(stock.Id)) return NotFound();
+                    else throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -123,26 +85,14 @@ namespace simple_stock_manager.Controllers
             return View(stock);
         }
 
-        // GET: Stocks/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var stock = await _context.Stock
-                .Include(s => s.Product)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (stock == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
+            var stock = await _context.Stock.Include(s => s.Product).FirstOrDefaultAsync(m => m.Id == id);
+            if (stock == null) return NotFound();
             return View(stock);
         }
 
-        // POST: Stocks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
