@@ -18,7 +18,7 @@ namespace simple_stock_manager.Models
         [DisplayName("Tipo")]
         public TypeOfPerson CustomerType { get; set; }
 
-        public CustomerAddress Address { get; set; }
+        public CustomerAddress CustomerAddress { get; set; }
 
         [DisplayName("Ativo?")]
         public bool Active { get; set; }

@@ -26,9 +26,9 @@ namespace simple_stock_manager.Controllers
         {
             if (id == null) return NotFound();
             var customer = await _context.Customers.FirstOrDefaultAsync(m => m.Id == id);
-            customer.Address = await _context.CustomersAddress.FirstOrDefaultAsync(m => m.CustomerId == id);
+            customer.CustomerAddress = await _context.CustomersAddress.FirstOrDefaultAsync(m => m.CustomerId == id);
             if (customer == null) return NotFound();
-            var tuple = new Tuple<Customer, CustomerAddress>(customer, customer.Address);
+            var tuple = new Tuple<Customer, CustomerAddress>(customer, customer.CustomerAddress);
             return View(tuple);
         }
 
@@ -55,7 +55,7 @@ namespace simple_stock_manager.Controllers
         {
             if (id == null) return NotFound();
             var customer = await _context.Customers.FindAsync(id);
-            customer.Address = await _context.CustomersAddress.FirstOrDefaultAsync(m => m.CustomerId == id);
+            customer.CustomerAddress = await _context.CustomersAddress.FirstOrDefaultAsync(m => m.CustomerId == id);
             if (customer == null) return NotFound();
             return View(customer);
         }
@@ -69,7 +69,9 @@ namespace simple_stock_manager.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
+                    _context.Customers.Remove(await _context.Customers.FindAsync(id));
+                    await _context.SaveChangesAsync();
+                    _context.Add(customer);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

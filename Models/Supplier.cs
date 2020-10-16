@@ -19,7 +19,7 @@ namespace simple_stock_manager.Models
         [DisplayName("Tipo")]
         public TypeOfPerson SupplierType { get; set; }
 
-        public SupplierAddress Address { get; set; }
+        public SupplierAddress SupplierAddress { get; set; }
 
         [DisplayName("Ativo?")]
         public bool Active { get; set; }

@@ -514,7 +514,7 @@ namespace simple_stock_manager.Migrations
             modelBuilder.Entity("simple_stock_manager.Models.CustomerAddress", b =>
                 {
                     b.HasOne("simple_stock_manager.Models.Customer", "Customer")
-                        .WithOne("Address")
+                        .WithOne("CustomerAddress")
                         .HasForeignKey("simple_stock_manager.Models.CustomerAddress", "CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -556,7 +556,7 @@ namespace simple_stock_manager.Migrations
             modelBuilder.Entity("simple_stock_manager.Models.SupplierAddress", b =>
                 {
                     b.HasOne("simple_stock_manager.Models.Supplier", "Supplier")
-                        .WithOne("Address")
+                        .WithOne("SupplierAddress")
                         .HasForeignKey("simple_stock_manager.Models.SupplierAddress", "SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

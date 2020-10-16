@@ -26,9 +26,9 @@ namespace simple_stock_manager.Controllers
         {
             if (id == null) return NotFound();
             var supplier = await _context.Suppliers.FirstOrDefaultAsync(m => m.Id == id);
-            supplier.Address = await _context.SuppliersAddress.FirstOrDefaultAsync(m => m.SupplierId == id);
+            supplier.SupplierAddress = await _context.SuppliersAddress.FirstOrDefaultAsync(m => m.SupplierId == id);
             if (supplier == null) return NotFound();
-            var tuple = new Tuple<Supplier, SupplierAddress>(supplier, supplier.Address);
+            var tuple = new Tuple<Supplier, SupplierAddress>(supplier, supplier.SupplierAddress);
             return View(tuple);
         }
 
@@ -51,7 +51,7 @@ namespace simple_stock_manager.Controllers
         {
             if (id == null) return NotFound();
             var supplier = await _context.Suppliers.FindAsync(id);
-            supplier.Address = await _context.SuppliersAddress.FirstOrDefaultAsync(m => m.SupplierId == id);
+            supplier.SupplierAddress = await _context.SuppliersAddress.FirstOrDefaultAsync(m => m.SupplierId == id);
             if (supplier == null) return NotFound();
             return View(supplier);
         }
@@ -64,7 +64,9 @@ namespace simple_stock_manager.Controllers
             if (!ModelState.IsValid) View(supplier);
             try
             {
-                _context.Update(supplier);
+                _context.Suppliers.Remove(await _context.Suppliers.FindAsync(id));
+                await _context.SaveChangesAsync();
+                _context.Add(supplier);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

@@ -10,7 +10,7 @@ using simple_stock_manager.Data;
 namespace simple_stock_manager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201004021252_Initial")]
+    [Migration("20201016125402_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -516,7 +516,7 @@ namespace simple_stock_manager.Migrations
             modelBuilder.Entity("simple_stock_manager.Models.CustomerAddress", b =>
                 {
                     b.HasOne("simple_stock_manager.Models.Customer", "Customer")
-                        .WithOne("Address")
+                        .WithOne("CustomerAddress")
                         .HasForeignKey("simple_stock_manager.Models.CustomerAddress", "CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -558,7 +558,7 @@ namespace simple_stock_manager.Migrations
             modelBuilder.Entity("simple_stock_manager.Models.SupplierAddress", b =>
                 {
                     b.HasOne("simple_stock_manager.Models.Supplier", "Supplier")
-                        .WithOne("Address")
+                        .WithOne("SupplierAddress")
                         .HasForeignKey("simple_stock_manager.Models.SupplierAddress", "SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
