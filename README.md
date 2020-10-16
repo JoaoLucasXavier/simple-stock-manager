@@ -51,7 +51,7 @@ Segue abaixo algumas telas do sistema:
 
 ## Clonando, Construindo e executando a aplicação em seu computador
 
-Abaixo veremos como você pode executar a aplicação User authentication laravel app localmente em seu computador, já tendo em vista que você possui todas as ferramentas para desenvolvimento e execução de projetos php/laravel devidamente configuradas em seu computador.
+Abaixo veremos como você pode executar a aplicação localmente em seu computador, já tendo em vista que você possui todas as ferramentas para desenvolvimento e execução de projetos .NET CORE 3.1 devidamente configuradas em seu computador.
 
 **Siga os seguintes passos:**
 
